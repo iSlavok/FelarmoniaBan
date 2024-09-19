@@ -1,0 +1,24 @@
+name: FelarmoniaBan
+version: '1.0'
+main: online.slavok.felarmoniaBan.FelarmoniaBan
+api-version: '1.21'
+
+commands:
+  fban:
+    description: Ban player
+    usage: /ban <player> <reason>
+    permission: felarmonia.ban
+  funban:
+    description: Unban player
+    usage: /unban <player>
+    aliases:
+      - fpardon
+    permission: felarmonia.unban
+
+permissions:
+  felarmonia.ban:
+    description: Allows player to ban other players
+    default: op
+  felarmonia.unban:
+    description: Allows player to unban other players
+    default: op

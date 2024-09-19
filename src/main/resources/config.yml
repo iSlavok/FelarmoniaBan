@@ -1,0 +1,2 @@
+mysql-url: jdbc:mysql://localhost:3306/your_db_name
+bot-token: your_bot_token
