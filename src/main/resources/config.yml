@@ -1,2 +1,7 @@
-mysql-url: jdbc:mysql://localhost:3306/your_db_name
+whitelist-mysql-url: jdbc:mysql://localhost:3306/your_db_name
+auth-mysql-url: jdbc:mysql://localhost:3306/your_db_name
 bot-token: your_bot_token
+
+prefix: <dark_gray>Felarmonia</dark_gray> <white><bold>></bold></white>
+ban-prefix: <gray>Ban</gray> <white>></white>
+unban-prefix: <gray>Unban</gray> <white>></white>

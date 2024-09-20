@@ -1,9 +1,8 @@
 package online.slavok.felarmoniaBan.comands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.minimessage.MiniMessage
 import online.slavok.felarmoniaBan.Bot
-import online.slavok.felarmoniaBan.Database
+import online.slavok.felarmoniaBan.database.WhitelistDatabase
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -11,33 +10,59 @@ import org.bukkit.entity.Player
 
 class UnbanCommand (
     private val bot: Bot,
-    private val database: Database,
+    private val database: WhitelistDatabase,
+    private val prefix: String,
 ) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) return true
         if (args != null) {
             if (args.size != 1) {
-                sender.sendMessage(Component.text("Неверные аргументы", NamedTextColor.RED))
+                sender.sendMessage(
+                    MiniMessage.miniMessage()
+                        .deserialize(
+                            "$prefix <red>Неверные аргументы."
+                        )
+                )
                 return true
             }
         } else {
-            sender.sendMessage(Component.text("Неверные аргументы", NamedTextColor.RED))
+            sender.sendMessage(
+                MiniMessage.miniMessage()
+                    .deserialize(
+                        "$prefix <red>Неверные аргументы."
+                    )
+            )
             return true
         }
         val nickname = args[0]
-        if (!database.isBanned(nickname)) {
-            sender.sendMessage(Component.text("Игрок не заблокирован.", NamedTextColor.RED))
+        if (!database.isBannedByNickname(nickname)) {
+            sender.sendMessage(
+                MiniMessage.miniMessage()
+                    .deserialize(
+                        "$prefix <red>Игрок <dark_red>$nickname</dark_red> не заблокирован."
+                    )
+            )
             return true
         }
         val discordId = database.getDiscordId(nickname)
         if (discordId != null) {
-            bot.unbanSendMessage(discordId, sender)
-            bot.addPlayerRole(discordId, sender)
+            bot.sendMessage(discordId, bot.unbanMessage, sender, nickname, prefix)
+            bot.addPlayerRole(discordId, sender, prefix, nickname)
         } else {
-            sender.sendMessage(Component.text("Не удалось получить дискорд игрока или модератора", NamedTextColor.RED))
+            sender.sendMessage(
+                MiniMessage.miniMessage()
+                    .deserialize(
+                        "$prefix <red>Не удалось получить дискорд игрока или модератора."
+                    )
+            )
         }
         database.unban(nickname)
-        sender.sendMessage(Component.text("Игрок разблокирован", NamedTextColor.GREEN))
+        sender.sendMessage(
+            MiniMessage.miniMessage()
+                .deserialize(
+                    "$prefix <green>Игрок <dark_green>$nickname</dark_green> разблокирован."
+                )
+        )
         return true
     }
 }

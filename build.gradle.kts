@@ -42,3 +42,6 @@ tasks.processResources {
         expand(props)
     }
 }
+tasks.shadowJar {
+    archiveClassifier.set("")
+}
