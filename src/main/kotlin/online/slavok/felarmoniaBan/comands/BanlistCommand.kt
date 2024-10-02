@@ -13,10 +13,20 @@ class BanlistCommand (
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         val list = database.getBanlist()
         if (list.isEmpty()) {
-            sender.sendMessage("$prefix <red>Список заблокированных пуст.")
+            sender.sendMessage(
+                MiniMessage.miniMessage()
+                    .deserialize(
+                        "$prefix <red>Список заблокированных пуст."
+                    )
+            )
             return true
         }
-        sender.sendMessage("$prefix <green>Список заблокированных:")
+        sender.sendMessage(
+            MiniMessage.miniMessage()
+                .deserialize(
+                    "$prefix <green>Список заблокированных:"
+                )
+        )
         list.forEach {
             sender.sendMessage(
                 MiniMessage.miniMessage()
