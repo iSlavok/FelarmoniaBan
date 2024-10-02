@@ -1,5 +1,5 @@
 name: FelarmoniaBan
-version: '1.1'
+version: '1.2'
 main: online.slavok.felarmoniaBan.FelarmoniaBan
 api-version: '1.21'
 
@@ -14,6 +14,10 @@ commands:
     aliases:
       - fpardon
     permission: felarmonia.unban
+  fbanlist:
+    description: View banlist
+    usage: /banlist
+    permission: felarmonia.banlist
 
 permissions:
   felarmonia.ban:
@@ -21,4 +25,7 @@ permissions:
     default: op
   felarmonia.unban:
     description: Allows player to unban other players
+    default: op
+  felarmonia.banlist:
+    description: Allows player to view banlist
     default: op

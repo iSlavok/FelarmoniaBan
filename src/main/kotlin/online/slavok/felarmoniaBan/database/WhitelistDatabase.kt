@@ -108,4 +108,18 @@ class WhitelistDatabase (
             }
         }
     }
+
+    fun getBanlist(): List<List<String>> {
+        return getConnection().use { connection ->
+            connection.prepareStatement("SELECT nickname, reason FROM banlist").use { ps ->
+                ps.executeQuery().use { rs ->
+                    val list = mutableListOf<List<String>>()
+                    while (rs.next()) {
+                        list.add(listOf(rs.getString("nickname"), rs.getString("reason")))
+                    }
+                    list
+                }
+            }
+        }
+    }
 }

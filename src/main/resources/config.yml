@@ -5,3 +5,4 @@ bot-token: your_bot_token
 prefix: <dark_gray>Felarmonia</dark_gray> <white><bold>></bold></white>
 ban-prefix: <gray>Ban</gray> <white>></white>
 unban-prefix: <gray>Unban</gray> <white>></white>
+banlist-prefix: <gray>Banlist</gray> <white>></white>
