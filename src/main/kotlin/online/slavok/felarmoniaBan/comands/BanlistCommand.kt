@@ -1,5 +1,6 @@
 package online.slavok.felarmoniaBan.comands
 
+import net.kyori.adventure.text.minimessage.MiniMessage
 import online.slavok.felarmoniaBan.database.WhitelistDatabase
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -17,7 +18,12 @@ class BanlistCommand (
         }
         sender.sendMessage("$prefix <green>Список заблокированных:")
         list.forEach {
-            sender.sendMessage("$prefix <white>${it[0]}</white> <gray>- ${it[1]}</gray>")
+            sender.sendMessage(
+                MiniMessage.miniMessage()
+                    .deserialize(
+                        "$prefix <white>${it[0]}</white> <gray>- ${it[1]}</gray>"
+                    )
+            )
         }
         return true
     }
