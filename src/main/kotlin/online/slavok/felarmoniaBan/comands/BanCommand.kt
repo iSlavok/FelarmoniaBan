@@ -87,6 +87,7 @@ class BanCommand (
                     "$prefix <green>Игрок <dark_green>$nickname</dark_green> заблокирован по причине <dark_green>$reason</dark_green>"
                 )
         )
+        bot.sendLogMessage(discordId, moderatorDiscordId, nickname, sender.name, true, reason)
         return true
     }
 }

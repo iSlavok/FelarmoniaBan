@@ -13,7 +13,6 @@ class PreLoginListener (
     @EventHandler(priority = EventPriority.HIGH)
     fun onAsyncPlayerPreLogin(event: AsyncPlayerPreLoginEvent) {
         if (event.loginResult != AsyncPlayerPreLoginEvent.Result.ALLOWED) return
-        println(event.address.hostAddress)
         if (database.isBannedByNickname(event.name)) {
             event.disallow(
                 AsyncPlayerPreLoginEvent.Result.KICK_BANNED,

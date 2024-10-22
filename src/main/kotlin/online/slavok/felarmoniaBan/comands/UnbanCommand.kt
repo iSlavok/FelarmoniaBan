@@ -45,6 +45,7 @@ class UnbanCommand (
             return true
         }
         val discordId = database.getDiscordId(nickname)
+        val moderatorDiscordId = database.getDiscordId(sender.name)
         if (discordId != null) {
             bot.sendMessage(discordId, bot.unbanMessage, sender, nickname, prefix)
             bot.addPlayerRole(discordId, sender, prefix, nickname)
@@ -63,6 +64,7 @@ class UnbanCommand (
                     "$prefix <green>Игрок <dark_green>$nickname</dark_green> разблокирован."
                 )
         )
+        bot.sendLogMessage(discordId, moderatorDiscordId, nickname, sender.name, true)
         return true
     }
 }

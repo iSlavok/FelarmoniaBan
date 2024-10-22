@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder
 import net.dv8tion.jda.api.utils.messages.MessageCreateData
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -155,5 +156,44 @@ class Bot (
             )
         }
         guild.retrieveMemberById(discordId).queue(callback, exception)
+    }
+
+    fun sendLogMessage(playerDiscordId: String?, moderatorDiscordId: String?, playerNickname: String, moderatorNickname: String, isBan: Boolean, reason: String? = null) {
+        val guild = jda.getGuildById("1278106662267523072")!!
+        val channel: TextChannel = guild.getTextChannelById("1297835139165978644") ?: return
+        val message = MessageCreateBuilder().addEmbeds(
+            MessageEmbed(
+                null,
+                if (isBan) "$playerNickname заблокирован" else "$playerNickname разблокирован",
+                null,
+                null,
+                null,
+                if (isBan) 0xFF0000 else 0x00FF00,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                listOf(
+                    MessageEmbed.Field(
+                        "Игрок:",
+                        "<@$playerDiscordId> ($playerNickname)",
+                        false
+                    ),
+                    MessageEmbed.Field(
+                        "Модератор:",
+                        "<@$moderatorDiscordId> ($moderatorNickname)",
+                        false
+                    ),
+                    if (reason != null) MessageEmbed.Field(
+                        "Причина:",
+                        reason,
+                        false
+                    ) else null
+                ),
+            )
+        ).build()
+        channel.sendMessage(message).queue({ _ -> }, { _ -> })
     }
 }
